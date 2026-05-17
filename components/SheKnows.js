@@ -166,14 +166,7 @@ export default function SheKnows() {
       (p.symptoms || []).slice(0, 3).join(", ") || "what you're experiencing";
     const greeting = `Hi ${p.name || "lovely"} 💜 I'm so glad you found your way here.\n\nBased on what you've shared, you're dealing with things like **${symList}** — and I want you to know: what you're feeling is real, it makes sense, and there are reasons behind it.\n\nYou can ask me **anything** — your cycle, hormones, skin, mood, energy, gut health, fertility, or anything else on your mind. This is your space. 🌸`;
     setMessages([{ role: "ai", text: greeting }]);
-    setHistory([
-      {
-        role: "assistant",
-        content: greeting
-          .replace(/\*\*(.*?)\*\*/g, "$1")
-          .replace(/\n/g, " "),
-      },
-    ]);
+    setHistory([]);
     setScreen("chat");
   }
 
