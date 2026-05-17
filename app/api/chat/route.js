@@ -36,15 +36,17 @@ YOUR STYLE:
       systemInstruction: sysPrompt,
     });
 
-    // Convert history to Gemini format (role "assistant" → "model", skip last message)
-    const geminiHistory = messages.slice(0, -1).map((m) => ({
+    const allButLast = messages.slice(0, -1);
+    const firstUserIdx = allButLast.findIndex((m) => m.role === "user");
+    const trimmed = firstUserIdx === -1 ? [] : allButLast.slice(firstUserIdx);
+
+    const geminiHistory = trimmed.map((m) => ({
       role: m.role === "assistant" ? "model" : "user",
       parts: [{ text: m.content }],
     }));
 
     const chat = model.startChat({ history: geminiHistory });
 
-    // Send the latest user message
     const lastMessage = messages[messages.length - 1];
     const result = await chat.sendMessage(lastMessage.content);
     const reply =
